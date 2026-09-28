@@ -61,9 +61,9 @@
 
 // ---------- WiFi / MQTT ----------
 // Fill these in with your own network + broker details.
-#define WIFI_SSID       "hibah"
+#define WIFI_SSID       "your password name"
 //#define WIFI_PASSWORD   "your-wifi-password"
-#define MQTT_BROKER     "10.120.46.153"   // your broker's IP (e.g. Mosquitto on your PC/Pi)
+#define MQTT_BROKER     "your ip"   // your broker's IP (e.g. Mosquitto on your PC/Pi)
 #define MQTT_PORT       1883
 #define MQTT_CLIENT_ID  "envmonitor-esp32"
 #define MQTT_TOPIC_EVENT "envmonitor/event"
