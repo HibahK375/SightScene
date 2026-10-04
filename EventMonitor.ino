@@ -7,6 +7,7 @@
 #include "MQTTClient.h"
 #include "ContextModifier.h"
 #include "EventHistory.h"
+#include "Alert.h"                 // NEW
 
 
 static int16_t audioBuf[AUDIO_CHUNK_SAMPLES];
@@ -28,6 +29,8 @@ void setup() {
   Serial.begin(SERIAL_BAUD);
   delay(500);
 
+  alertInit();                     // NEW: LED/buzzer self-test at boot
+
   audioCaptureInit();
   imuCaptureInit();
   featureExtractionInit();
@@ -42,6 +45,7 @@ void setup() {
 }
 
 void loop() {
+  alertUpdate();                   // NEW: keeps LED/buzzer timing going
   mqttLoop();
 
   // ---- Audio ----
@@ -60,6 +64,7 @@ void loop() {
 
     // Record only a NEW STRONG event
     maybeRecordEvent(fe);
+    alertOnEvent(fe.level);        // NEW
 
     mqttPublishAudio(af, ar);
     mqttPublishEvent(fe);
@@ -100,6 +105,7 @@ void loop() {
 
         // Record only a NEW STRONG event
         maybeRecordEvent(fe);
+        alertOnEvent(fe.level);    // NEW
 
         mqttPublishIMU(imf, ir);
         mqttPublishEvent(fe);
